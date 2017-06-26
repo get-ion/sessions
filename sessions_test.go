@@ -202,7 +202,7 @@ func TestFlashMessages(t *testing.T) {
 	e.GET("/get").Expect().Status(ion.StatusOK).JSON().Object().Equal(values)
 	// get the same flash on other request should return nothing because the flash message is removed after fetch once
 	e.GET("/get").Expect().Status(ion.StatusOK).JSON().Object().Empty()
-	// test destory which also clears first
+	// test destroy which also clears first
 	d := e.GET("/destroy").Expect().Status(ion.StatusOK)
 	d.JSON().Object().Empty()
 	e.GET("/after_destroy").Expect().Status(ion.StatusOK).Cookies().Empty()

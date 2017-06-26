@@ -35,7 +35,7 @@ func main() {
 			return
 		}
 
-		ctx.Writef("Ok you are comming from /set ,the value of the name is %s", name)
+		ctx.Writef("Ok you are coming from /set ,the value of the name is %s", name)
 		ctx.Writef(", and again from the same context: %s", name)
 	})
 
