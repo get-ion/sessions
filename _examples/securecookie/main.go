@@ -14,7 +14,9 @@ import (
 	"github.com/gorilla/securecookie"
 )
 
-func main() {
+var mySessions *sessions.Sessions
+
+func newApp() *ion.Application {
 	app := ion.New()
 
 	cookieName := "mycustomsessionid"
@@ -24,7 +26,7 @@ func main() {
 	blockKey := []byte("lot-secret-of-characters-big-too")
 	secureCookie := securecookie.New(hashKey, blockKey)
 
-	mySessions := sessions.New(sessions.Config{
+	mySessions = sessions.New(sessions.Config{
 		Cookie: cookieName,
 		Encode: secureCookie.Encode,
 		Decode: secureCookie.Decode,
@@ -71,5 +73,10 @@ func main() {
 	// mySessions.DestroyByID
 	// mySessions.DestroyAll
 
+	return app
+}
+
+func main() {
+	app := newApp()
 	app.Run(ion.Addr(":8080"))
 }

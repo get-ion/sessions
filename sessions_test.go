@@ -7,34 +7,12 @@ import (
 	"github.com/get-ion/ion/context"
 	"github.com/get-ion/ion/httptest"
 	"github.com/get-ion/sessions"
-	// developers can use any library to add a custom cookie encoder/decoder.
-	// At this test code we use the gorilla's securecookie library:
-	"github.com/gorilla/securecookie"
 )
 
 func TestSessions(t *testing.T) {
 	app := ion.New()
 
 	sess := sessions.New(sessions.Config{Cookie: "mycustomsessionid"})
-	testSessions(t, sess, app)
-}
-
-func TestSessionsEncodeDecode(t *testing.T) {
-	// test the sessions encode decode via gorilla.securecookie
-	app := ion.New()
-	// IMPORTANT
-	cookieName := "mycustomsessionid"
-	// AES only supports key sizes of 16, 24 or 32 bytes.
-	// You either need to provide exactly that amount or you derive the key from what you type in.
-	hashKey := []byte("the-big-and-secret-fash-key-here")
-	blockKey := []byte("lot-secret-of-characters-big-too")
-	secureCookie := securecookie.New(hashKey, blockKey)
-	sess := sessions.New(sessions.Config{
-		Cookie: cookieName,
-		Encode: secureCookie.Encode,
-		Decode: secureCookie.Decode,
-	})
-
 	testSessions(t, sess, app)
 }
 
